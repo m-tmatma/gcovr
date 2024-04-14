@@ -25,6 +25,9 @@ import subprocess
 import io
 from threading import Lock
 from typing import Callable, List, Optional, Set, Tuple
+import pprint
+
+LOGGER = logging.getLogger("gcovr")
 
 from ...options import Options
 from ...merging import merge_covdata
@@ -170,6 +173,11 @@ def process_gcov_data(
     options: Options,
     current_dir: str = None,
 ) -> None:
+    LOGGER.info("data_fname: "+ pprint.pformat(data_fname))
+    LOGGER.info("gcda_fname: "+ pprint.pformat(gcda_fname))
+    LOGGER.info("covdata: "+ pprint.pformat(covdata))
+    LOGGER.info("Options: "+ pprint.pformat(Options))
+    LOGGER.info("current_dir: "+ pprint.pformat(current_dir))
     with io.open(
         data_fname, "r", encoding=options.source_encoding, errors="replace"
     ) as INPUT:
