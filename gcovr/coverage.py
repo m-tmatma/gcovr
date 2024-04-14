@@ -387,11 +387,16 @@ class LineCoverage:
 
         raise RuntimeError(f"Unknown decision type: {self.decision!r}")
 
+import logging
+import pprint
+
+LOGGER = logging.getLogger("gcovr")
 
 class FileCoverage:
     __slots__ = "filename", "functions", "lines", "parent_dirname"
 
     def __init__(self, filename: str) -> None:
+        LOGGER.info("filename: "+ pprint.pformat(filename))
         self.filename: str = filename
         self.functions: Dict[str, FunctionCoverage] = {}
         self.lines: Dict[int, LineCoverage] = {}
@@ -404,6 +409,7 @@ class FileCoverage:
         for function in self.functions.values():
             for lineno, excluded in function.excluded.items():
                 if not excluded:
+                    LOGGER.info(f"{function}:{lineno}")
                     total += 1
                     if function.count[lineno] > 0:
                         covered += 1
@@ -415,6 +421,7 @@ class FileCoverage:
         covered = 0
 
         for line in self.lines.values():
+            LOGGER.info(pprint.pformat(line))
             if line.is_reportable:
                 total += 1
                 if line.is_covered:
@@ -426,6 +433,7 @@ class FileCoverage:
         stat = CoverageStat.new_empty()
 
         for line in self.lines.values():
+            LOGGER.info(pprint.pformat(line))
             if line.is_reportable:
                 stat += line.branch_coverage()
 
