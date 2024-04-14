@@ -41,10 +41,16 @@ COL_COVERED_COUNT_WIDTH = 8
 COL_PERCENTAGE_WIDTH = 7  # including "%" percentage sign
 UN_COVERED_SEPARATOR = "   "
 LINE_WIDTH = 78
+import pprint
+import logging
 
+LOGGER = logging.getLogger("gcovr")
 
 def write_report(covdata: CovData, output_file: str, options: Options) -> None:
     """produce the classic gcovr text report"""
+    LOGGER.info("covdata: "+ pprint.pformat(covdata))
+    LOGGER.info("output_file: "+ pprint.pformat(output_file))
+    LOGGER.info("options: "+ pprint.pformat(options))
 
     with open_text_for_writing(output_file, "coverage.txt") as fh:
         # Header

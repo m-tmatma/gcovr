@@ -22,6 +22,9 @@ import logging
 import os
 from argparse import ArgumentTypeError
 from typing import Any, Callable, Dict, Optional, Union
+import pprint
+
+LOGGER = logging.getLogger("gcovr")
 
 from ...coverage import (
     CallCoverage,
@@ -361,6 +364,10 @@ class RootInfo:
 # Produce an HTML report
 #
 def write_report(covdata: CovData, output_file: str, options: Options) -> None:
+    LOGGER.info("covdata: "+ pprint.pformat(covdata))
+    LOGGER.info("output_file: "+ pprint.pformat(output_file))
+    LOGGER.info("options: "+ pprint.pformat(options))
+
     css_data = CssRenderer.render(options)
     medium_threshold = options.html_medium_threshold
     high_threshold = options.html_high_threshold
