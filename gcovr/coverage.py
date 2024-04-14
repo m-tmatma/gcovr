@@ -320,6 +320,7 @@ class LineCoverage:
         self.branches: Dict[int, BranchCoverage] = {}
         self.decision: Optional[DecisionCoverage] = None
         self.calls: Dict[int, CallCoverage] = {}
+        LOGGER.info(f"LineCoverage lineno: {lineno}, count: {count}, excluded: {excluded}, md5: {md5}")
 
     @property
     def is_excluded(self) -> bool:
@@ -396,7 +397,7 @@ class FileCoverage:
     __slots__ = "filename", "functions", "lines", "parent_dirname"
 
     def __init__(self, filename: str) -> None:
-        LOGGER.info("filename: "+ pprint.pformat(filename))
+        LOGGER.info("FileCoverage filename: "+ pprint.pformat(filename))
         self.filename: str = filename
         self.functions: Dict[str, FunctionCoverage] = {}
         self.lines: Dict[int, LineCoverage] = {}
